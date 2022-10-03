@@ -11,8 +11,6 @@ struct Node
 };
 
 /*CRUD OPERATIONS*/
-
-
 void printList(struct Node *head);
 struct Node *createNode(int number);
 struct Node *push(struct Node *head, int number);
@@ -25,6 +23,11 @@ struct Node *splice(struct Node *head, int pos, int deleteCount);
 struct Node *split(struct Node *head, int pos, struct Node *rest);
 struct Node *destroy(struct Node *head);
 
+/* SORT OPERATION */
+
+struct Node *merge_sort(struct Node *head, int length);
+struct Node *merge_sort_proc(struct Node *left, int left_length, struct Node *right, int right_length);
+
 int main(void)
 {
     struct Node *head = createNode(1);
@@ -32,10 +35,16 @@ int main(void)
     head = push(head, 10);
     head = push(head, 2);
     head = push(head, 8);
-
-    printf("---\n");
     printList(head);
-    
+    printf("---\n");
+    struct Node *left = head;
+    struct Node *right = split(head, 2, right);
+
+    left = merge_sort_proc(left, 2, right, 2);
+
+    printList(left);
+    printList(right);
+
     return 0;
 }
 
@@ -109,8 +118,6 @@ struct Node *unshift(struct Node *head, int number)
 struct Node *shift(struct Node *head)
 {
     assert(head != NULL);
-
-    struct Node *item = head;
 
     head = head->next;
     return head;
@@ -261,3 +268,54 @@ struct Node *split(struct Node *head, int pos, struct Node *rest)
     return rest;
 }
 
+struct Node *merge_sort(struct Node *head, int length)
+{
+    assert(head != NULL);
+
+    assert(length > 0);
+
+    if (length < 2)
+    {
+        return head;
+    }
+
+    int half = length / 2;
+
+    struct Node *left = head;
+    struct Node *right = split(head, half, right);
+
+    return merge_sort_proc(merge_sort(left, half), half, merge_sort(right, length - half), length - half);
+}
+
+struct Node *merge_sort_proc(struct Node *left, int left_length, struct Node *right, int right_length)
+{
+    assert(left != NULL);
+    assert(right != NULL);
+    assert(left_length >= 1);
+    assert(right_length >= 1);
+
+    // int counter = 0;
+
+    int left_walker = 0;
+    int right_walker = 0;
+
+    while (right_walker < right_length && left_walker < left_length)
+    {
+        if ((left + left_walker)->val <= (right + right_walker)->val)
+        {
+            left_walker++;
+        }
+        else
+        {
+            // swap them;
+            int temp = (left + left_walker)->val;
+            (left + left_walker)->val = (right + right_walker)->val;
+            (right + right_walker)->val = temp;
+
+            // increment the right walker;
+            right_walker++;
+        }
+    }
+
+    return left;
+}
