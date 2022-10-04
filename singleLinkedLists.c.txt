@@ -25,6 +25,7 @@ struct Node *split(struct Node *head, int pos, struct Node *rest);
 struct Node *destroy(struct Node *head);
 
 /* SORTING OPERATIONS */
+
 void bubble_sort(struct Node *head, int length);
 
 int main(void)
@@ -33,13 +34,12 @@ int main(void)
 
     head = push(head, 10);
     head = push(head, 2);
-    head = push(head, 99);
     head = push(head, 8);
-    head = push(head, -1);
-    head = push(head, 0);
 
     printList(head);
     printf("---\n");
+    bubble_sort(head, 4);
+    printList(head);
 
     return 0;
 }
@@ -271,30 +271,21 @@ void bubble_sort(struct Node *head, int length)
 
     int i = 0;
     int j = 0;
-    bool swaps = true;
-    struct Node *current = head;
 
-    while (i < length - 1 && swaps)
+    while (i < length - 1)
     {
-        j = 0;
-        current = head;
-        swaps = false;
-
         while (j < length - i - 1)
         {
-            if (current->next->val < current->val)
+            if ((head + j + 1)->val < (head + j)->val)
             {
                 // swap
-                int temp = current->val;
-                current->val = current->next->val;
-                current->next->val = temp;
-
-                swaps = true;
+                int temp = (head + j)->val;
+                (head + j)->val = (head + j + 1)->val;
+                (head + j + 1)->val = temp;
             }
-
-            current = current->next;
             j++;
         }
+
         i++;
     }
 }
