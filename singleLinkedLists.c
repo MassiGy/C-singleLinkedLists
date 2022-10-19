@@ -302,7 +302,6 @@ void bubble_sort(struct Node *head, int length)
         i++;
     }
 }
-
 struct Node *binary_sort_proc(struct Node *left, int left_length, struct Node *right, int right_length)
 {
     assert(left != NULL);
