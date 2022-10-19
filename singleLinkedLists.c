@@ -35,15 +35,10 @@ int main(void)
     head = push(head, 10);
     head = push(head, 2);
     head = push(head, 8);
+
+    struct Node*rest = split(head,2,rest);
+    head = merge_sort_proc(head, 2,rest,2);
     printList(head);
-    printf("---\n");
-    struct Node *left = head;
-    struct Node *right = split(head, 2, right);
-
-    left = merge_sort_proc(left, 2, right, 2);
-
-    printList(left);
-    printList(right);
 
     return 0;
 }
@@ -284,7 +279,10 @@ struct Node *merge_sort(struct Node *head, int length)
     struct Node *left = head;
     struct Node *right = split(head, half, right);
 
-    return merge_sort_proc(merge_sort(left, half), half, merge_sort(right, length - half), length - half);
+    left = merge_sort(left, half);
+    right = merge_sort(right, length - half);
+
+    return merge_sort_proc(left, half, right, length - half);
 }
 
 struct Node *merge_sort_proc(struct Node *left, int left_length, struct Node *right, int right_length)
@@ -294,28 +292,45 @@ struct Node *merge_sort_proc(struct Node *left, int left_length, struct Node *ri
     assert(left_length >= 1);
     assert(right_length >= 1);
 
-    // int counter = 0;
+    struct Node *left_walker = left;
+    struct Node *res = left;
+    struct Node *right_walker = right;
+    int counter = 0;
 
-    int left_walker = 0;
-    int right_walker = 0;
-
-    while (right_walker < right_length && left_walker < left_length)
+    while (counter < (left_length + right_length))
     {
-        if ((left + left_walker)->val <= (right + right_walker)->val)
+        if (left_walker->next != NULL && right_walker->next != NULL)
         {
-            left_walker++;
+            if (left_walker->val <= right_walker->val)
+            {
+                left_walker = left_walker->next;
+            }
+            else
+            {
+                // swap them;
+                int temp = left_walker->val;
+
+                left_walker->val = right_walker->val;
+                right_walker->val = temp;
+
+                // increment the right walker;
+                right_walker = right_walker->next;
+            }
         }
         else
         {
-            // swap them;
-            int temp = (left + left_walker)->val;
-            (left + left_walker)->val = (right + right_walker)->val;
-            (right + right_walker)->val = temp;
-
-            // increment the right walker;
-            right_walker++;
+            if (left_walker->next == NULL && right_walker->next != NULL)
+            {
+                left_walker->next = right_walker->next;
+            }
+            if (right_walker->next == NULL && left_walker->next != NULL)
+            {
+                right_walker->next = left_walker->next;
+            }
         }
+
+        counter++;
     }
 
-    return left;
+    return res;
 }
