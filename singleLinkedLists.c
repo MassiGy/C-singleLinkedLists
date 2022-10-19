@@ -26,6 +26,7 @@ struct Node *destroy(struct Node *head);
 
 /* SORTING OPERATIONS */
 void bubble_sort(struct Node *head, int length);
+struct Node *binary_sort_proc(struct Node *left, int left_length, struct Node *right, int right_length);
 
 int main(void)
 {
@@ -40,6 +41,9 @@ int main(void)
 
     printList(head);
     printf("---\n");
+
+    head = binary_sort_proc(head, 2, (head + 2), 2);
+    printList(head);
 
     return 0;
 }
@@ -297,4 +301,39 @@ void bubble_sort(struct Node *head, int length)
         }
         i++;
     }
+}
+
+struct Node *binary_sort_proc(struct Node *left, int left_length, struct Node *right, int right_length)
+{
+    assert(left != NULL);
+    assert(right != NULL);
+    assert(left_length >= 1);
+    assert(right_length >= 1);
+
+    // int counter = 0;
+
+    int left_walker = 0;
+    int right_walker = 1;
+
+    while (right_walker < right_length && left_walker < left_length)
+    {
+        if ((*(left + left_walker)).val <= (*(right + right_walker)).val)
+        {
+            left_walker++;
+        }
+        else
+        {
+
+            // swap them;
+            int temp = (*(left + left_walker)).val;
+
+            (*(left + left_walker)).val = (*(right + right_walker)).val;
+            (*(right + right_walker)).val = temp;
+
+            // increment the right walker;
+            right_walker++;
+        }
+    }
+
+    return left;
 }
