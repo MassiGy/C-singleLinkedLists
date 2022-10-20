@@ -12,17 +12,16 @@ int main(void)
 
     printList(head);
     printf("---\n");
-    bubble_sort(head, 6);
-    printList(head);
-
-    printf("---\n");
 
     int *arr = listToArray(head, 6);
+    selectionSort(arr,6);
 
     for (int i = 0; i < 6; ++i)
     {
         printf("%i\n", *(arr + i));
     }
+
+
 
     printf("---\n");
 

@@ -1,7 +1,5 @@
 #include "../headers/arrays.h"
 
-
-
 void initArray(int *head, int size)
 {
     for (int i = 0; i < size; ++i)
@@ -61,9 +59,10 @@ bool liniarSearch(int *head, int size, int val)
         if (*(head + i) == val)
         {
             res = true;
-            return res;
+            break;
         }
     }
+    return res;
 }
 
 bool binarySearch(int *head, int first, int last, int val)
@@ -146,7 +145,7 @@ void selectionSort(int *head, int size)
         *(head + maxIndex) = temp;
     }
 }
-
+/*
 int *mergeSort(int *resault, int *head, int size)
 {
     assert(head != NULL);
@@ -208,3 +207,5 @@ int *mergeBySorting(int *resault, int *left, int left_length, int *right, int ri
 
     return resault;
 }
+
+*/
