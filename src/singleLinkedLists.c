@@ -254,3 +254,45 @@ void bubble_sort(struct Node *head, int length)
         i++;
     }
 }
+
+int *listToArray(struct Node *head, int length)
+{
+    assert(head != NULL);
+    assert(length > 0);
+
+    int *res = malloc(length * sizeof(int));
+
+    assert(res != NULL);
+
+    struct Node *traversal = head;
+    int counter = 0;
+
+    while (counter < length)
+    {
+        /* code */
+        res[counter] = traversal->val;
+        traversal = traversal->next;
+
+        counter++;
+    }
+
+    return res;
+}
+
+struct Node *arrayToList(int *arr, int length)
+{
+    assert(arr != NULL);
+    assert(length > 0);
+
+    struct Node *list = createNode(*(arr + length - 1));
+    int counter = length - 2;
+
+    while (counter >= 0)
+    {
+        // unshift is 0(1), so it is better then push ~ O(N)
+        list = unshift(list, *(arr + counter));
+        counter--;
+    }
+
+    return list;
+}
