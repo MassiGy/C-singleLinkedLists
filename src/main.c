@@ -12,7 +12,7 @@ int main(void)
 
     printList(head);
     printf("---\n");
-    insertion_sort(head,6);
+    bubble_sort(head,6);
     printList(head);
 
 
