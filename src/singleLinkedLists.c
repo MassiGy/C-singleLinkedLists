@@ -1,6 +1,5 @@
 #include "../headers/singleLinkedLists.h"
 
-
 struct Node *createNode(int number)
 {
     struct Node *item = malloc(sizeof(struct Node));
@@ -221,6 +220,56 @@ struct Node *split(struct Node *head, int pos, struct Node *rest)
     return rest;
 }
 
+void insertion_sort(struct Node *head, int length)
+{
+    assert(head != NULL);
+    assert(length >= 2);
+
+    struct Node *sorted_sub_list_lastEl = head;
+
+    int counter = 1;
+    struct Node *traversal = head;
+
+    while (counter < length)
+    {
+        if (traversal->next->val < sorted_sub_list_lastEl->val)
+        {
+           // insert the traversal node before the sorted_sub_list_lastEl
+           struct Node* sub_sorted_list_traversal = head;
+
+           while (sub_sorted_list_traversal->val < traversal->next->val
+                 && sub_sorted_list_traversal != sorted_sub_list_lastEl)
+         
+           {
+                sub_sorted_list_traversal = sub_sorted_list_traversal->next;
+           }
+
+           // sub_sorted_list_traversal now points to the element right before 
+           // the element that contains the first val > traversal->val
+
+           // insert a node with the traversal value as the next element on the 
+           // sub_sorted_list_traversal element
+            struct Node* element_to_insert = createNode(traversal->next->val);
+            
+            element_to_insert->next = sub_sorted_list_traversal;
+
+            struct Node* rest = traversal->next->next;
+
+            traversal->next->next = NULL;
+            free(traversal->next);
+
+            sub_sorted_list_traversal->next = rest;
+
+            if(counter == 1) 
+                head = element_to_insert;
+
+        }
+
+        traversal = traversal->next;        
+        counter++;
+    }
+}
+
 void bubble_sort(struct Node *head, int length)
 {
     assert(head != NULL);
@@ -254,38 +303,4 @@ void bubble_sort(struct Node *head, int length)
         }
         i++;
     }
-}
-struct Node *binary_sort_proc(struct Node *left, int left_length, struct Node *right, int right_length)
-{
-    assert(left != NULL);
-    assert(right != NULL);
-    assert(left_length >= 1);
-    assert(right_length >= 1);
-
-    // int counter = 0;
-
-    int left_walker = 0;
-    int right_walker = 1;
-
-    while (right_walker < right_length && left_walker < left_length)
-    {
-        if ((*(left + left_walker)).val <= (*(right + right_walker)).val)
-        {
-            left_walker++;
-        }
-        else
-        {
-
-            // swap them;
-            int temp = (*(left + left_walker)).val;
-
-            (*(left + left_walker)).val = (*(right + right_walker)).val;
-            (*(right + right_walker)).val = temp;
-
-            // increment the right walker;
-            right_walker++;
-        }
-    }
-
-    return left;
 }

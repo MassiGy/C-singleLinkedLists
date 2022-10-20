@@ -24,4 +24,4 @@ struct Node *destroy(struct Node *head);
 
 /* SORTING OPERATIONS */
 void bubble_sort(struct Node *head, int length);
-struct Node *binary_sort_proc(struct Node *left, int left_length, struct Node *right, int right_length);
+void insertion_sort(struct Node *head, int length);
