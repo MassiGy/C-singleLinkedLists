@@ -220,56 +220,6 @@ struct Node *split(struct Node *head, int pos, struct Node *rest)
     return rest;
 }
 
-void insertion_sort(struct Node *head, int length)
-{
-    assert(head != NULL);
-    assert(length >= 2);
-
-    struct Node *sorted_sub_list_lastEl = head;
-
-    int counter = 1;
-    struct Node *traversal = head;
-
-    while (counter < length)
-    {
-        if (traversal->next->val < sorted_sub_list_lastEl->val)
-        {
-           // insert the traversal node before the sorted_sub_list_lastEl
-           struct Node* sub_sorted_list_traversal = head;
-
-           while (sub_sorted_list_traversal->val < traversal->next->val
-                 && sub_sorted_list_traversal != sorted_sub_list_lastEl)
-         
-           {
-                sub_sorted_list_traversal = sub_sorted_list_traversal->next;
-           }
-
-           // sub_sorted_list_traversal now points to the element right before 
-           // the element that contains the first val > traversal->val
-
-           // insert a node with the traversal value as the next element on the 
-           // sub_sorted_list_traversal element
-            struct Node* element_to_insert = createNode(traversal->next->val);
-            
-            element_to_insert->next = sub_sorted_list_traversal;
-
-            struct Node* rest = traversal->next->next;
-
-            traversal->next->next = NULL;
-            free(traversal->next);
-
-            sub_sorted_list_traversal->next = rest;
-
-            if(counter == 1) 
-                head = element_to_insert;
-
-        }
-
-        traversal = traversal->next;        
-        counter++;
-    }
-}
-
 void bubble_sort(struct Node *head, int length)
 {
     assert(head != NULL);
