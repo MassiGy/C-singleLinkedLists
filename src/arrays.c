@@ -229,6 +229,69 @@ void q_insertion_sort_array(int *head, int size)
 }
 
 /*
+    Binary insertion sort is a more optemized version of the insertion_sort
+    The idea is simple, since the sub array is sorted we can binary traverse it.
+
+    This will make our time complexity ~ O(N * k *log(K)) where K:[1..N]
+*/
+
+void binary_insertion_sort_array(int *head, int size)
+{
+    assert(head != NULL);
+    assert(size > 1);
+
+    // keep track of the last elemnent on the sub sorted array
+    int sub_sorted_array_last_index = 0;
+
+    // walkthrough the rest of the array;
+    for (int i = 1; i < size; ++i)
+    {
+        if (head[i] < head[sub_sorted_array_last_index])
+        {
+            // left will store the start of the sub sorted array
+            int left = 0;
+            // right will store the end of the sub sorted array
+            int right = sub_sorted_array_last_index;
+
+            while (left < right)
+            {
+                /* code */
+                int mid = (left + right) / 2;
+
+                if (head[i] <= head[mid])
+                {
+                    right = mid;
+                }
+                else
+                {
+                    left = mid + 1;
+                }
+            }
+
+            // now left is the index of the first element
+            // on the sub sorted array that is bigger then head[i]
+
+
+            // now we need to shift the sub sorted array by one position to the right
+            
+            // first store head[i] before the override
+            int temp = head[i];
+            
+            for(int j = i; j > left; --j)
+            {
+                head[j] = head[j-1];
+            }
+
+            // insert the element head[i] into the index = val(left)
+
+            head[left] = temp;
+          
+        }
+        sub_sorted_array_last_index++;
+    }
+}
+
+/*
 int *mergeSort(int *resault, int *head, int size)
 {
     assert(head != NULL);

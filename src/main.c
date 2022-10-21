@@ -14,7 +14,7 @@ int main(void)
     printf("---\n");
 
     int *arr = listToArray(head, 6);
-    q_insertion_sort_array(arr,6);
+    binary_insertion_sort_array(arr,6);
     print_array(arr, 6);
 
 

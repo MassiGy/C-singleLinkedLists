@@ -14,6 +14,7 @@ void bubble_sort_array(int *head, int size);
 void selection_sort_array(int *head, int size);
 void insertion_sort_array(int *head , int size);
 void q_insertion_sort_array(int *head , int size);
+void binary_insertion_sort_array(int * head, int size);
 
 // // to (re)implement
 // int *mergeSort(int *resault, int *head, int size);
