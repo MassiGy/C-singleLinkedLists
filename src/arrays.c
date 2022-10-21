@@ -1,6 +1,6 @@
 #include "../headers/arrays.h"
 
-void initArray(int *head, int size)
+void init_array(int *head, int size)
 {
     for (int i = 0; i < size; ++i)
     {
@@ -8,7 +8,7 @@ void initArray(int *head, int size)
     }
 }
 
-void listArray(int *head, int size)
+void print_array(int *head, int size)
 {
     for (int i = 0; i < size; ++i)
     {
@@ -16,7 +16,7 @@ void listArray(int *head, int size)
     }
 }
 
-void fillArray(int *head, int size)
+void fill_array(int *head, int size)
 {
     for (int i = 0; i < size; ++i)
     {
@@ -24,7 +24,7 @@ void fillArray(int *head, int size)
     }
 }
 
-int getMax(int *head, int size)
+int get_max_array(int *head, int size)
 {
     int max = *head;
 
@@ -39,7 +39,7 @@ int getMax(int *head, int size)
     return max;
 }
 
-float getAverage(int *head, int size)
+float get_average_array(int *head, int size)
 {
     int sum = 0;
 
@@ -51,7 +51,7 @@ float getAverage(int *head, int size)
     return (float)sum / size;
 }
 
-bool liniarSearch(int *head, int size, int val)
+bool liniar_search_array(int *head, int size, int val)
 {
     bool res = false;
     for (int i = 0; i < size; ++i)
@@ -65,7 +65,7 @@ bool liniarSearch(int *head, int size, int val)
     return res;
 }
 
-bool binarySearch(int *head, int first, int last, int val)
+bool binary_search_array(int *head, int first, int last, int val)
 {
     bool resault = false;
 
@@ -89,17 +89,17 @@ bool binarySearch(int *head, int first, int last, int val)
 
     if (head[mid] > val)
     {
-        resault = binarySearch(head, first, mid - 1, val);
+        resault = binary_search_array(head, first, mid - 1, val);
     }
     else
     {
-        resault = binarySearch(head, mid + 1, last, val);
+        resault = binary_search_array(head, mid + 1, last, val);
     }
 
     return resault;
 }
 
-void bubleSort(int *head, int size)
+void bubble_sort_array(int *head, int size)
 {
     if (size <= 1)
         return;
@@ -119,7 +119,7 @@ void bubleSort(int *head, int size)
     }
 }
 
-void selectionSort(int *head, int size)
+void selection_sort_array(int *head, int size)
 {
     assert(head != NULL);
     assert(size > 1);
@@ -145,6 +145,89 @@ void selectionSort(int *head, int size)
         *(head + maxIndex) = temp;
     }
 }
+
+void insertion_sort_array(int *head, int size)
+{
+    assert(head != NULL);
+    assert(size > 1);
+
+    // set the last element index of the sub sorted array
+    int sub_sorted_arr_lastEl_index = 0;
+
+    // walkthrough the rest of the array starting from the sub sorted arr lastEl index
+    for (int i = 1; i < size; ++i)
+    {
+        if (head[i] < head[sub_sorted_arr_lastEl_index])
+        {
+            // go through the sub sorted array to find where you should insert the element
+            for (int j = 0; j <= sub_sorted_arr_lastEl_index; ++j)
+            {
+                if (head[j] > head[i])
+                {
+                    // save the head[i] val to not override it
+                    int temp = head[i];
+
+                    // shift the array elements from j+1 to length - 1
+                    for (int k = sub_sorted_arr_lastEl_index + 1; k > j; --k)
+                    {
+                        head[k] = head[k - 1];
+                    }
+
+                    // put the temp val in the head[sub_sorted_lastEl_index] and increment this refrence
+                    // CAUTION: we can only override the j'th element, only if this one is duplicated in the j+1'th pos
+                    // so we can only do this, if the operation head[j+1] = head[j] occures on the loop before
+                    head[j] = temp;
+                    sub_sorted_arr_lastEl_index++;
+                }
+            }
+        }
+        else
+        {
+            sub_sorted_arr_lastEl_index++;
+        }
+    }
+}
+
+/*
+    This version of the insertion sort algo uses another strategy compared to the last one.
+    This will insert always at the position of the last sub sorted array index,
+    whereas the one above always inserts before the last sub sorted array element,
+    meaning the it will always insert into the sub sorted array.
+
+    Notice that :
+        - first one is ~ O(N*M*P)
+            | N nb elmes of main array, M nb elems sub array, P nb elems between element to insert and sub array last element
+        - second one is ~ O(N*(N-k)) k:[1..N-1]
+*/
+
+void q_insertion_sort_array(int *head, int size)
+{
+    assert(head != NULL);
+    assert(size > 1);
+
+    // keep track of the sub sorted array logical size - 1
+    int sub_sorted_array_lastEL_index = 0;
+
+    // walkthrough the rest of the array
+    for (int i = 1; i < size; ++i)
+    {
+        if (head[i] < head[sub_sorted_array_lastEL_index])
+        {
+            for (int j = 0; j < sub_sorted_array_lastEL_index + 1; ++j)
+            {
+                if (head[j] > head[i])
+                {
+                    // insert the element
+                    int temp = head[i];
+                    head[i] = head[j];
+                    head[j] = temp;
+                }
+            }
+            sub_sorted_array_lastEL_index++;
+        }
+    }
+}
+
 /*
 int *mergeSort(int *resault, int *head, int size)
 {

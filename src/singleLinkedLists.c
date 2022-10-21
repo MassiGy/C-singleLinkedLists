@@ -1,6 +1,6 @@
 #include "../headers/singleLinkedLists.h"
 
-struct Node *createNode(int number)
+struct Node *create_node_list(int number)
 {
     struct Node *item = malloc(sizeof(struct Node));
 
@@ -11,7 +11,7 @@ struct Node *createNode(int number)
     return item;
 }
 
-void printList(struct Node *head)
+void print_list(struct Node *head)
 {
     struct Node *walker = head;
 
@@ -24,7 +24,7 @@ void printList(struct Node *head)
     }
 }
 
-struct Node *push(struct Node *head, int number)
+struct Node *push_list(struct Node *head, int number)
 {
     assert(head != NULL);
 
@@ -35,11 +35,11 @@ struct Node *push(struct Node *head, int number)
         walker = walker->next;
     }
 
-    walker->next = createNode(number);
+    walker->next = create_node_list(number);
     return head;
 }
 
-struct Node *pop(struct Node *head)
+struct Node *pop_list(struct Node *head)
 {
 
     assert(head != NULL);
@@ -54,11 +54,11 @@ struct Node *pop(struct Node *head)
     return walker;
 }
 
-struct Node *unshift(struct Node *head, int number)
+struct Node *unshift_list(struct Node *head, int number)
 {
     assert(head != NULL);
 
-    struct Node *item = createNode(number);
+    struct Node *item = create_node_list(number);
 
     assert(item != NULL);
 
@@ -67,7 +67,7 @@ struct Node *unshift(struct Node *head, int number)
     return head;
 }
 
-struct Node *shift(struct Node *head)
+struct Node *shift_list(struct Node *head)
 {
     assert(head != NULL);
 
@@ -75,7 +75,7 @@ struct Node *shift(struct Node *head)
     return head;
 }
 
-struct Node *destroy(struct Node *head)
+struct Node *destroy_list(struct Node *head)
 {
     assert(head != NULL);
 
@@ -91,13 +91,13 @@ struct Node *destroy(struct Node *head)
     return head;
 }
 
-struct Node *insertAt(struct Node *head, int pos, int number)
+struct Node *insertAt_list(struct Node *head, int pos, int number)
 {
     assert(head != NULL);
 
     if (pos <= 0)
     {
-        head = unshift(head, number);
+        head = unshift_list(head, number);
         return head;
     }
 
@@ -112,7 +112,7 @@ struct Node *insertAt(struct Node *head, int pos, int number)
 
     assert(walker != NULL);
 
-    struct Node *temp = createNode(number);
+    struct Node *temp = create_node_list(number);
 
     temp->next = walker->next;
 
@@ -121,7 +121,7 @@ struct Node *insertAt(struct Node *head, int pos, int number)
     return head;
 }
 
-struct Node *splice(struct Node *head, int pos, int deleteCount)
+struct Node *splice_list(struct Node *head, int pos, int deleteCount)
 {
     assert(head != NULL);
     int counter;
@@ -131,7 +131,7 @@ struct Node *splice(struct Node *head, int pos, int deleteCount)
         counter = 0;
         while (counter < deleteCount)
         {
-            head = shift(head);
+            head = shift_list(head);
             counter++;
         }
 
@@ -173,7 +173,7 @@ struct Node *splice(struct Node *head, int pos, int deleteCount)
     return head;
 }
 
-struct Node *updateAt(struct Node *head, int pos, int newVal)
+struct Node *updateAt_list(struct Node *head, int pos, int newVal)
 {
     assert(head != NULL);
 
@@ -199,7 +199,7 @@ struct Node *updateAt(struct Node *head, int pos, int newVal)
     return head;
 }
 
-struct Node *split(struct Node *head, int pos, struct Node *rest)
+struct Node *split_list(struct Node *head, int pos, struct Node *rest)
 {
     assert(head != NULL);
 
@@ -220,7 +220,7 @@ struct Node *split(struct Node *head, int pos, struct Node *rest)
     return rest;
 }
 
-void bubble_sort(struct Node *head, int length)
+void bubble_sort_list(struct Node *head, int length)
 {
     assert(head != NULL);
     assert(length >= 2);
@@ -284,13 +284,13 @@ struct Node *arrayToList(int *arr, int length)
     assert(arr != NULL);
     assert(length > 0);
 
-    struct Node *list = createNode(*(arr + length - 1));
+    struct Node *list = create_node_list(*(arr + length - 1));
     int counter = length - 2;
 
     while (counter >= 0)
     {
         // unshift is 0(1), so it is better then push ~ O(N)
-        list = unshift(list, *(arr + counter));
+        list = unshift_list(list, *(arr + counter));
         counter--;
     }
 

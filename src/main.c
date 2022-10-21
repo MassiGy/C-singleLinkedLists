@@ -2,31 +2,27 @@
 
 int main(void)
 {
-    struct Node *head = createNode(10);
+    struct Node *head = create_node_list(10);
 
-    head = push(head, 1);
-    head = push(head, 2);
-    head = push(head, 99);
-    head = push(head, 8);
-    head = push(head, 7);
+    head = push_list(head, 1);
+    head = push_list(head, 2);
+    head = push_list(head, 99);
+    head = push_list(head, 8);
+    head = push_list(head, 7);
 
-    printList(head);
+    print_list(head);
     printf("---\n");
 
     int *arr = listToArray(head, 6);
-    selectionSort(arr,6);
-
-    for (int i = 0; i < 6; ++i)
-    {
-        printf("%i\n", *(arr + i));
-    }
+    q_insertion_sort_array(arr,6);
+    print_array(arr, 6);
 
 
 
     printf("---\n");
 
     struct Node* temp = arrayToList(arr,6);
-    printList(temp);
+    print_list(temp);
 
     return 0;
 }
