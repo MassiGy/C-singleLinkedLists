@@ -231,6 +231,9 @@ void q_insertion_sort_array(int *head, int size)
 /*
     Binary insertion sort is a more optemized version of the insertion_sort
     The idea is simple, since the sub array is sorted we can binary traverse it.
+    
+    In this case, the binary traversal will search for the first element on the sub sorted array
+    that is bigger then the element to insert from the rest of the main array.
 
     This will make our time complexity ~ O(N * k *log(K)) where K:[1..N]
 */
