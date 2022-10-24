@@ -8,20 +8,19 @@ int main(void)
     head = push_list(head, 2);
     head = push_list(head, 99);
     head = push_list(head, 8);
-    head = push_list(head, 7);
 
     print_list(head);
     printf("---\n");
 
-    int *arr = listToArray(head, 6);
-    binary_insertion_sort_array(arr,6);
-    print_array(arr, 6);
+    int *arr = listToArray(head, 5);
+    printf("---\n");
 
-
+    merge_sort_array(&arr, 0, 4);
+    // print_array(arr, 5);
 
     printf("---\n");
 
-    struct Node* temp = arrayToList(arr,6);
+    struct Node *temp = arrayToList(arr, 5);
     print_list(temp);
 
     return 0;

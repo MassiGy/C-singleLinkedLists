@@ -292,60 +292,82 @@ void binary_insertion_sort_array(int *head, int size)
     }
 }
 
-void merge_sort(int *head, int start, int mid, int end)
+void merge_sort_array(int **head, int start, int end)
 {
-    assert(head != NULL);
+    assert(*head != NULL);
 
-    if (end - start <= 1)
+    if (end - start <= 0)
         return;
 
-    int mid = (end + start) / 2;
+    int mid = (start + end) / 2;
 
-    merge_sort(head, start, (start + mid) / 2, mid);
-    merge_sort(head, mid + 1, (end + mid) / 2, end);
+    merge_sort_array(head, start, mid);
+    merge_sort_array(head, mid + 1, end);
 
-    merge(head, start, mid, end);
+    merge_array(head, start, mid, end);
 }
 
-void merge(int *head, int start, int mid, int end)
+/*
+    This merge function need to be debugged
+    The problem is on the sorting
+    Consider using two sub arrays to store a local version of left to mid and mid+1 to end
+*/
+void merge_array(int **head, int start, int mid, int end)
 {
-    assert(head != NULL);
+    assert(*head != NULL);
     assert(end > start);
 
-    int left_walker = start;
-    int right_walker = mid;
+    int head_walker = start;
+    int left_walker = 0;
+    int right_walker = 0;
 
-    while (left_walker < mid && right_walker < end)
+    int left[mid - start + 1];
+    int right[end - mid];
+
+    // copy the first half of the array into left
+    for (int i = 0; i < (mid - start +1); ++i)
     {
-        if (head[left_walker] > head[right_walker])
+        left[i] = (*head)[i + start];
+    }
+
+    // copy the second half of the array into right
+    for (int i = 0; i < (end - mid); ++i)
+    {
+        right[i] = (*head)[i + mid + 1];
+    }
+
+    // merge the left and the right subarrays into the head array
+    while (left_walker < (mid - start + 1) && right_walker < (end - mid))
+    {
+        /* code */
+        if (left[left_walker] <= right[right_walker])
         {
-            // swap them
-            int temp = head[left_walker];
-
-            head[left_walker] = head[right_walker];
-            head[right_walker] = temp;
-
-            // increment the left walker
+            (*head)[head_walker] = left[left_walker];
             left_walker++;
-            continue;
         }
-
-        if (head[left_walker] == head[right_walker])
+        else
         {
-            // put the head[right_walker] at head[left_walker+1]
-            int temp = head[left_walker + 1];
-            head[left_walker + 1] = head[right_walker];
-            head[right_walker] = temp;
-
-            left_walker++;
+            (*head)[head_walker] = right[right_walker];
             right_walker++;
-            continue;
         }
+        head_walker++;
+    }
 
-        if (head[left_walker] < head[right_walker])
-        {
-            left_walker++;
-            continue;
-        }
+    /* Copy the remaining elements of left[], if there
+   are any */
+    while (left_walker < (mid - start + 1))
+    {
+        (*head)[head_walker] = left[left_walker];
+        left_walker++;
+        head_walker++;
+    }
+
+    /* Copy the remaining elements of right[], if there
+    are any */
+    while (right_walker < (end - mid))
+    {
+        (*head)[head_walker] = right[right_walker];
+        right_walker++;
+        head_walker++;
     }
 }
