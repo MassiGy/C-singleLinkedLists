@@ -231,7 +231,7 @@ void q_insertion_sort_array(int *head, int size)
 /*
     Binary insertion sort is a more optemized version of the insertion_sort
     The idea is simple, since the sub array is sorted we can binary traverse it.
-    
+
     In this case, the binary traversal will search for the first element on the sub sorted array
     that is bigger then the element to insert from the rest of the main array.
 
@@ -274,87 +274,78 @@ void binary_insertion_sort_array(int *head, int size)
             // now left is the index of the first element
             // on the sub sorted array that is bigger then head[i]
 
-
             // now we need to shift the sub sorted array by one position to the right
-            
+
             // first store head[i] before the override
             int temp = head[i];
-            
-            for(int j = i; j > left; --j)
+
+            for (int j = i; j > left; --j)
             {
-                head[j] = head[j-1];
+                head[j] = head[j - 1];
             }
 
             // insert the element head[i] into the index = val(left)
 
             head[left] = temp;
-          
         }
         sub_sorted_array_last_index++;
     }
 }
 
-/*
-int *mergeSort(int *resault, int *head, int size)
+void merge_sort(int *head, int start, int mid, int end)
 {
     assert(head != NULL);
-    assert(size >= 1);
 
-    if (size < 2)
-    {
-        return head;
-    }
+    if (end - start <= 1)
+        return;
 
-    int half = size / 2;
+    int mid = (end + start) / 2;
 
-    int *left = mergeSort(resault, head, half);
-    int *right = mergeSort(resault, &head[size - half], size - half);
+    merge_sort(head, start, (start + mid) / 2, mid);
+    merge_sort(head, mid + 1, (end + mid) / 2, end);
 
-    return mergeBySorting(resault, left, half, right, size - half);
+    merge(head, start, mid, end);
 }
 
-int *mergeBySorting(int *resault, int *left, int left_length, int *right, int right_length)
+void merge(int *head, int start, int mid, int end)
 {
+    assert(head != NULL);
+    assert(end > start);
 
-    assert(left != NULL);
-    assert(right != NULL);
+    int left_walker = start;
+    int right_walker = mid;
 
-    assert(left_length > 0 && right_length > 0);
-
-    int left_size = left_length;
-    int right_size = right_length;
-
-    int counter = 0;
-    int left_walker = 0;
-    int right_walker = 0;
-
-    while (left_size && right_size)
+    while (left_walker < mid && right_walker < end)
     {
-        if (left[left_walker] < right[right_walker])
+        if (head[left_walker] > head[right_walker])
         {
-            resault[counter] = left[left_walker];
+            // swap them
+            int temp = head[left_walker];
+
+            head[left_walker] = head[right_walker];
+            head[right_walker] = temp;
+
+            // increment the left walker
             left_walker++;
-            left_size--;
+            continue;
         }
-        else
+
+        if (head[left_walker] == head[right_walker])
         {
-            resault[counter] = right[right_walker];
+            // put the head[right_walker] at head[left_walker+1]
+            int temp = head[left_walker + 1];
+            head[left_walker + 1] = head[right_walker];
+            head[right_walker] = temp;
+
+            left_walker++;
             right_walker++;
-            right_size--;
+            continue;
         }
-        counter++;
-    }
 
-    if (left_size)
-    {
-        resault[counter] = left[left_walker - 1];
+        if (head[left_walker] < head[right_walker])
+        {
+            left_walker++;
+            continue;
+        }
     }
-    if (right_size)
-    {
-        resault[counter] = right[right_walker - 1];
-    }
-
-    return resault;
 }
-
-*/

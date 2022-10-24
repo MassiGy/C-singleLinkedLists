@@ -15,7 +15,4 @@ void selection_sort_array(int *head, int size);
 void insertion_sort_array(int *head , int size);
 void q_insertion_sort_array(int *head , int size);
 void binary_insertion_sort_array(int * head, int size);
-
-// // to (re)implement
-// int *mergeSort(int *resault, int *head, int size);
-// int *mergeBySorting(int *resault, int *left, int left_length, int *right, int right_length);
+void merge_sort(int * head, int start, int mid, int end);
