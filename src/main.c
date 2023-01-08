@@ -22,6 +22,11 @@ int main(void)
 
     struct Node *temp = arrayToList(arr, 5);
     print_list(temp);
+    
+    // free all the allocated mem
+    destroy_list(head);
+    destroy_list(temp);
+    free(arr);
 
     return 0;
 }
