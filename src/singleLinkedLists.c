@@ -5,10 +5,9 @@ struct Node *create_node_list(int number)
     struct Node *item = malloc(sizeof(struct Node));
 
     assert(item != NULL);
-
     item->val = number;
     item->next = NULL;
-    return item;
+	return item;
 }
 
 void print_list(struct Node *head)

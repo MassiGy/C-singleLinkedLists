@@ -15,6 +15,7 @@ int main(void)
     int *arr = listToArray(head, 5);
     printf("---\n");
 
+    
     merge_sort_array(&arr, 0, 4);
     // print_array(arr, 5);
 
